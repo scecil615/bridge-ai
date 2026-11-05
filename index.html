@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Bridge | Communication Made Simple</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="container">
+
+    <header>
+      <h1>Bridge</h1>
+      <p class="subtitle">
+        Making digital communication easier,
+        safer, and more accessible.
+      </p>
+    </header>
+
+    <section class="card">
+      <h2>Understand Your Message</h2>
+
+      <p class="instructions">
+        Have a confusing text or email?
+        Paste it below and Bridge will
+        help you understand it.
+      </p>
+
+      <label for="message">
+        <strong>Your message</strong>
+      </label>
+
+      <textarea
+        id="message"
+        placeholder="Paste your message here..."
+      ></textarea>
+
+      <button type="button" id="simplifyBtn">
+        Simplify My Message
+      </button>
+           <div id="result" class="result" role="status" aria-live="polite" hidden>
+        <h3>Your Message Explained</h3>
+        <p id="simplifiedText"></p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Bridge is here to help you stay connected.</p>
+    </footer>
+
+  </main>
+<script src="script.js"></script>
+</body>
+</html>
