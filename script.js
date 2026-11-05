@@ -66,7 +66,16 @@ button.addEventListener("click", function () {
   }
 
   simplifiedText.textContent = explanation;
+ 
+const extractedDetails = extractDetails(message);
+
+if (extractedDetails.length > 0) {
+  importantDetails.textContent =
+    extractedDetails.join("\n");
+} else {
   importantDetails.textContent = details;
+}
+
   nextSteps.textContent = action;
 
   result.hidden = false;
@@ -216,3 +225,44 @@ Object.keys(samples).forEach(function (buttonId) {
     messageInput.focus();
   });
 });
+
+/* Bridge v0.3: Information extraction */
+
+function extractDetails(message) {
+  const datePattern =
+    /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,\s*\d{4})?\b/i;
+
+  const timePattern =
+    /\b(?:1[0-2]|0?[1-9]):[0-5]\d\s*(?:AM|PM)\b/i;
+
+  const moneyPattern =
+    /\$\s?\d+(?:,\d{3})*(?:\.\d{2})?/;
+
+  const arrivalPattern =
+    /arrive\s+\d+\s+minutes?\s+early/i;
+
+  const foundDetails = [];
+
+  const date = message.match(datePattern);
+  const time = message.match(timePattern);
+  const money = message.match(moneyPattern);
+  const arrival = message.match(arrivalPattern);
+
+  if (date) {
+    foundDetails.push("Date: " + date[0]);
+  }
+
+  if (time) {
+    foundDetails.push("Time: " + time[0]);
+  }
+
+  if (money) {
+    foundDetails.push("Amount: " + money[0]);
+  }
+
+  if (arrival) {
+    foundDetails.push("Instruction: " + arrival[0]);
+  }
+
+  return foundDetails;
+}

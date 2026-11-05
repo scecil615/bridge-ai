@@ -266,3 +266,6 @@ textarea {
   color: #234c6c;
   margin-top: 10px;
 }
+#importantDetails {
+  white-space: pre-line;
+}
