@@ -127,14 +127,28 @@ readAloudButton.addEventListener("click", function () {
 
   window.speechSynthesis.cancel();
 
-  const speechText = [
-    "What does this mean?",
-    simplifiedText.textContent,
-    "Important details.",
-    importantDetails.textContent,
-    "What should I do?",
-    nextSteps.textContent
-  ].join(" ");
+  
+const speechParts = [
+  "What does this mean?",
+  simplifiedText.textContent,
+  "Important details.",
+  importantDetails.textContent,
+  "What should I do?",
+  nextSteps.textContent
+];
+
+if (!scamWarnings.hidden) {
+  speechParts.push("Potential warning signs.");
+
+  warningList.querySelectorAll("li").forEach(function (item) {
+    speechParts.push(item.textContent);
+  });
+
+  speechParts.push(safetyAdvice.textContent);
+}
+
+const speechText = speechParts.join(" ");
+
 
   const speech = new SpeechSynthesisUtterance(speechText);
 
@@ -175,16 +189,30 @@ const copyStatus =
   document.getElementById("copyStatus");
 
 copyButton.addEventListener("click", async function () {
-  const explanation = [
-    "What does this mean?",
-    simplifiedText.textContent,
-    "",
-    "Important Details",
-    importantDetails.textContent,
-    "",
-    "What should I do?",
-    nextSteps.textContent
-  ].join("\n");
+  
+const explanationParts = [
+  "What does this mean?",
+  simplifiedText.textContent,
+  "",
+  "Important Details",
+  importantDetails.textContent,
+  "",
+  "What should I do?",
+  nextSteps.textContent
+];
+
+if (!scamWarnings.hidden) {
+  explanationParts.push("", "Potential Warning Signs");
+
+  warningList.querySelectorAll("li").forEach(function (item) {
+    explanationParts.push("- " + item.textContent);
+  });
+
+  explanationParts.push("", safetyAdvice.textContent);
+}
+
+const explanation = explanationParts.join("\n");
+
 
   try {
     await navigator.clipboard.writeText(explanation);
