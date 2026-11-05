@@ -44,7 +44,10 @@ button.addEventListener("click", function () {
     action =
       "Do not share your password. Contact the organization using a trusted phone number or website.";
 
-  } else if (lowerMessage.includes("payment")) {
+
+} else if (
+  /\b(payment|pay|paying|paid|bill|billing|balance|owe|overdue|invoice|transfer money|send money)\b/i.test(message)
+) {
     explanation =
       "This message appears to concern a payment.";
 
