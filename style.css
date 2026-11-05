@@ -142,3 +142,127 @@ footer {
   line-height: 1.5;
   margin-top: 18px;
 }
+
+/* Accessibility Controls */
+
+.accessibility-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.accessibility-controls span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.accessibility-controls button {
+  width: auto;
+  margin: 0;
+  padding: 12px 18px;
+  font-size: 18px;
+}
+
+/* Adjustable text sizing */
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 1.125rem;
+}
+
+.instructions,
+.result p {
+  font-size: 1rem;
+}
+
+textarea {
+  font-size: 1rem;
+}
+
+.demo-notice {
+  font-size: 0.875rem;
+}
+
+/* Read-aloud controls */
+
+.speech-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.speech-controls button {
+  flex: 1;
+  width: auto;
+  margin-top: 0;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+#stopReading {
+  background-color: #ffffff;
+  color: #1769aa;
+  border: 2px solid #1769aa;
+}
+
+#stopReading:hover {
+  background-color: #f0f6ff;
+}
+
+.speech-status {
+  font-size: 0.95rem;
+  margin-top: 12px;
+  color: #425466;
+}
+
+@media (max-width: 500px) {
+  .speech-controls {
+    flex-direction: column;
+  }
+}
+
+/* Sample message buttons */
+
+.sample-messages {
+  margin-bottom: 24px;
+}
+
+.sample-messages p {
+  margin-bottom: 10px;
+}
+
+.sample-messages button {
+  display: inline-block;
+  width: auto;
+  margin: 5px 8px 5px 0;
+  padding: 12px 16px;
+  font-size: 1rem;
+  background-color: #eaf4ff;
+  color: #174e7a;
+  border: 2px solid #1769aa;
+}
+
+.sample-messages button:hover {
+  background-color: #d5e9fc;
+}
+
+/* Copy explanation */
+
+#copyExplanation {
+  background-color: #234c6c;
+}
+
+#copyExplanation:hover {
+  background-color: #173b56;
+}
+
+.copy-status {
+  font-size: 0.95rem;
+  color: #234c6c;
+  margin-top: 10px;
+}

@@ -21,6 +21,18 @@
       </p>
     </header>
 
+<div class="accessibility-controls">
+  <span>Text Size:</span>
+  <button type="button" id="decreaseText"
+    aria-label="Make text smaller">
+    A− Smaller
+  </button>
+  <button type="button" id="increaseText"
+    aria-label="Make text larger">
+    A+ Larger
+  </button>
+</div>
+
     <section class="card">
       <h2>Understand Your Message</h2>
 
@@ -29,6 +41,22 @@
         Paste it below and Bridge will
         help you understand it.
       </p>
+
+<div class="sample-messages">
+  <p><strong>Try a sample message:</strong></p>
+
+  <button type="button" id="sampleAppointment">
+    Appointment Reminder
+  </button>
+
+  <button type="button" id="sampleSecurity">
+    Account Security
+  </button>
+
+  <button type="button" id="samplePayment">
+    Payment Notice
+  </button>
+</div>
 
       <label for="message">
         <strong>Your message</strong>
@@ -55,6 +83,26 @@
   <h4>What should I do?</h4>
   <p id="nextSteps"></p>
 </div>
+
+<div class="speech-controls">
+  <button type="button" id="readAloud">
+    🔊 Read Aloud
+  </button>
+
+  <button type="button" id="stopReading">
+    ■ Stop Reading
+  </button>
+</div>
+
+<button type="button" id="copyExplanation">
+  Copy Explanation
+</button>
+
+<p id="copyStatus" class="copy-status"
+   role="status" aria-live="polite"></p>
+
+<p id="speechStatus" class="speech-status"
+   role="status" aria-live="polite"></p>
 
 <p class="demo-notice">
   Bridge is currently a demonstration.

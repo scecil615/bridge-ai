@@ -71,3 +71,148 @@ button.addEventListener("click", function () {
 
   result.hidden = false;
 });
+
+const increaseText =
+  document.getElementById("increaseText");
+
+const decreaseText =
+  document.getElementById("decreaseText");
+
+let textSize = 100;
+
+increaseText.addEventListener("click", function () {
+  if (textSize < 150) {
+    textSize += 10;
+    document.documentElement.style.fontSize =
+      textSize + "%";
+  }
+});
+
+decreaseText.addEventListener("click", function () {
+  if (textSize > 90) {
+    textSize -= 10;
+    document.documentElement.style.fontSize =
+      textSize + "%";
+  }
+});
+
+/* Read-aloud functionality */
+
+const readAloudButton = document.getElementById("readAloud");
+const stopReadingButton = document.getElementById("stopReading");
+const speechStatus = document.getElementById("speechStatus");
+
+const speechSupported =
+  "speechSynthesis" in window &&
+  "SpeechSynthesisUtterance" in window;
+
+if (!speechSupported) {
+  readAloudButton.disabled = true;
+  stopReadingButton.disabled = true;
+  speechStatus.textContent =
+    "Read-aloud is not supported in this browser.";
+}
+
+readAloudButton.addEventListener("click", function () {
+  if (!speechSupported) return;
+
+  window.speechSynthesis.cancel();
+
+  const speechText = [
+    "What does this mean?",
+    simplifiedText.textContent,
+    "Important details.",
+    importantDetails.textContent,
+    "What should I do?",
+    nextSteps.textContent
+  ].join(" ");
+
+  const speech = new SpeechSynthesisUtterance(speechText);
+
+  speech.lang = "en-US";
+  speech.rate = 0.85;
+
+  speech.onstart = function () {
+    speechStatus.textContent = "Reading your explanation aloud.";
+  };
+
+  speech.onend = function () {
+    speechStatus.textContent = "Finished reading.";
+  };
+
+  speech.onerror = function (event) {
+    if (event.error !== "canceled" &&
+        event.error !== "interrupted") {
+      speechStatus.textContent = "Unable to read aloud.";
+    }
+  };
+
+  window.speechSynthesis.speak(speech);
+});
+
+stopReadingButton.addEventListener("click", function () {
+  if (!speechSupported) return;
+
+  window.speechSynthesis.cancel();
+  speechStatus.textContent = "Reading stopped.";
+});
+
+/* Copy explanation */
+
+const copyButton =
+  document.getElementById("copyExplanation");
+
+const copyStatus =
+  document.getElementById("copyStatus");
+
+copyButton.addEventListener("click", async function () {
+  const explanation = [
+    "What does this mean?",
+    simplifiedText.textContent,
+    "",
+    "Important Details",
+    importantDetails.textContent,
+    "",
+    "What should I do?",
+    nextSteps.textContent
+  ].join("\n");
+
+  try {
+    await navigator.clipboard.writeText(explanation);
+    copyStatus.textContent = "Explanation copied!";
+  } catch (error) {
+    copyStatus.textContent =
+      "Unable to copy automatically. Please select and copy the explanation manually.";
+  }
+});
+
+/* Sample messages */
+
+const samples = {
+  sampleAppointment:
+    "Hello, your appointment is scheduled for Friday at 10:00 AM. Please arrive 15 minutes early.",
+
+  sampleSecurity:
+    "URGENT: Verify your account immediately. Click the link below and enter your password to avoid suspension.",
+
+  samplePayment:
+    "This is a reminder that your payment of $45 is due on November 15."
+};
+
+Object.keys(samples).forEach(function (buttonId) {
+  const sampleButton = document.getElementById(buttonId);
+
+  sampleButton.addEventListener("click", function () {
+    messageInput.value = samples[buttonId];
+
+    result.hidden = true;
+    copyStatus.textContent = "";
+    speechStatus.textContent = "";
+
+    if (speechSupported) {
+      window.speechSynthesis.cancel();
+    }
+
+    messageInput.focus();
+  });
+});
