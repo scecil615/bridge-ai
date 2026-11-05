@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bridge Automated Tests</title>
+</head>
+<body>
+  <h1>Bridge Test Results</h1>
+  <div id="testResults"></div>
+
+  <script src="messageRules.js"></script>
+
+  <script>
+    const tests = [
+      {
+        name: "Recognizes payment",
+        input: "Your payment is due",
+        expected: true
+      },
+      {
+        name: "Recognizes pay",
+        input: "Please pay your bill",
+        expected: true
+      },
+      {
+        name: "Recognizes overdue balance",
+        input: "Your balance is overdue",
+        expected: true
+      },
+      {
+        name: "Ignores unrelated messages",
+        input: "Your appointment is Friday",
+        expected: false
+      },
+      {
+        name: "Recognizes send money",
+        input: "Please send money immediately",
+        expected: true
+      }
+    ];
+
+    const results = document.getElementById("testResults");
+    let passed = 0;
+
+    tests.forEach(function (test) {
+      const actual = isPaymentMessage(test.input);
+      const success = actual === test.expected;
+
+      if (success) passed++;
+
+      const paragraph = document.createElement("p");
+
+      paragraph.textContent =
+        (success ? "PASS: " : "FAIL: ") + test.name;
+
+      paragraph.style.color = success ? "green" : "red";
+
+      results.appendChild(paragraph);
+    });
+
+    const summary = document.createElement("h2");
+
+    summary.textContent =
+      passed + " of " + tests.length + " tests passed";
+
+    results.prepend(summary);
+  </script>
+</body>
+</html>
