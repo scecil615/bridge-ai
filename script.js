@@ -381,3 +381,38 @@ button.addEventListener("click", function () {
 
   scamWarnings.hidden = false;
 });
+
+/* Bridge v0.5: Clear Message */
+
+const clearMessageButton =
+  document.getElementById("clearMessage");
+
+clearMessageButton.addEventListener("click", function () {
+  // Stop any ongoing speech
+  if (speechSupported) {
+    window.speechSynthesis.cancel();
+  }
+
+  // Clear the message input
+  messageInput.value = "";
+
+  // Hide the explanation and warnings
+  result.hidden = true;
+  scamWarnings.hidden = true;
+
+  // Remove previous warning items
+  warningList.replaceChildren();
+
+  // Clear status messages
+  speechStatus.textContent = "";
+  copyStatus.textContent = "";
+
+  // Clear old explanation text
+  simplifiedText.textContent = "";
+  importantDetails.textContent = "";
+  nextSteps.textContent = "";
+  safetyAdvice.textContent = "";
+
+  // Return the cursor to the message box
+  messageInput.focus();
+});
