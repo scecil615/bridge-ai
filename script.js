@@ -279,3 +279,77 @@ function extractDetails(message) {
 
   return foundDetails;
 }
+
+/* Bridge v0.4: Scam awareness demo */
+
+const scamWarnings = document.getElementById("scamWarnings");
+const warningList = document.getElementById("warningList");
+const safetyAdvice = document.getElementById("safetyAdvice");
+
+function checkWarningSigns(message) {
+  const warnings = [];
+
+  if (/\b(urgent|immediately|act now|final warning)\b/i.test(message)) {
+    warnings.push(
+      "Urgent language: The message pressures you to act quickly."
+    );
+  }
+
+  if (/\b(password|passcode|verification code|one.time code)\b/i.test(message)) {
+    warnings.push(
+      "Sensitive information: The message mentions credentials or security codes. Check whether it is requesting them."
+    );
+  }
+
+  if (/\b(click (this |the |a )?link|tap (this |the )?link)\b/i.test(message)) {
+    warnings.push(
+      "Link request: Be cautious about following links in unexpected messages."
+    );
+  }
+
+  if (/\b(gift card|wire transfer|cryptocurrency)\b/i.test(message)) {
+    warnings.push(
+      "Payment method: Requests involving gift cards, wire transfers, or cryptocurrency deserve extra verification."
+    );
+  }
+
+  if (/\b(suspended|locked|terminated)\b/i.test(message)) {
+    warnings.push(
+      "Account threat: The message may be using the threat of lost access to create pressure."
+    );
+  }
+
+  return warnings;
+}
+
+button.addEventListener("click", function () {
+  const message = messageInput.value.trim();
+
+  warningList.replaceChildren();
+  scamWarnings.hidden = true;
+
+  if (!message) return;
+
+  const warnings = checkWarningSigns(message);
+
+  warnings.forEach(function (warning) {
+    const item = document.createElement("li");
+    item.textContent = warning;
+    warningList.appendChild(item);
+  });
+
+  if (warnings.length > 0) {
+    safetyAdvice.textContent =
+      "If this message was unexpected, verify it using a trusted phone number or website. Do not share passwords or verification codes.";
+  } else {
+    const item = document.createElement("li");
+    item.textContent =
+      "No supported warning phrases were found. This does not mean the message is safe.";
+    warningList.appendChild(item);
+
+    safetyAdvice.textContent =
+      "Bridge cannot verify senders, links, or whether a message is genuine.";
+  }
+
+  scamWarnings.hidden = false;
+});

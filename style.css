@@ -269,3 +269,36 @@ textarea {
 #importantDetails {
   white-space: pre-line;
 }
+/* Scam awareness */
+
+.scam-warnings {
+  margin-top: 25px;
+  padding: 22px;
+  background-color: #fff4e5;
+  border-left: 5px solid #b45309;
+  border-radius: 10px;
+  color: #422006;
+}
+
+.scam-warnings[hidden] {
+  display: none;
+}
+
+.scam-warnings h4 {
+  color: #92400e;
+  margin-top: 0;
+}
+
+.scam-warnings ul {
+  padding-left: 25px;
+  line-height: 1.7;
+}
+
+.scam-warnings li {
+  margin-bottom: 12px;
+}
+
+.scam-warnings p {
+  font-size: 1rem;
+  font-weight: bold;
+}
