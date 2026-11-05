@@ -228,41 +228,54 @@ Object.keys(samples).forEach(function (buttonId) {
 
 /* Bridge v0.3: Information extraction */
 
+
+/* Bridge v0.3: Improved information extraction */
+
 function extractDetails(message) {
-  const datePattern =
-    /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,\s*\d{4})?\b/i;
+  const patterns = {
+    writtenDate:
+      /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,\s*\d{4})?\b/gi,
 
-  const timePattern =
-    /\b(?:1[0-2]|0?[1-9]):[0-5]\d\s*(?:AM|PM)\b/i;
+    numericDate:
+      /\b(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[12]\d|3[01])(?:\/\d{2,4})?\b/g,
 
-  const moneyPattern =
-    /\$\s?\d+(?:,\d{3})*(?:\.\d{2})?/;
+    weekday:
+      /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/gi,
 
-  const arrivalPattern =
-    /arrive\s+\d+\s+minutes?\s+early/i;
+    time:
+      /\b(?:1[0-2]|0?[1-9]):[0-5]\d\s*(?:AM|PM)\b/gi,
+
+    money:
+      /\$\s?\d+(?:,\d{3})*(?:\.\d{2})?/g,
+
+    arrival:
+      /\barrive\s+\d+\s+minutes?\s+early\b/gi,
+
+    deadline:
+      /\b(?:due|pay|respond|submit)\s+(?:by|on|before)\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January\s+\d{1,2}|February\s+\d{1,2}|March\s+\d{1,2}|April\s+\d{1,2}|May\s+\d{1,2}|June\s+\d{1,2}|July\s+\d{1,2}|August\s+\d{1,2}|September\s+\d{1,2}|October\s+\d{1,2}|November\s+\d{1,2}|December\s+\d{1,2}|\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\b/gi
+  };
 
   const foundDetails = [];
 
-  const date = message.match(datePattern);
-  const time = message.match(timePattern);
-  const money = message.match(moneyPattern);
-  const arrival = message.match(arrivalPattern);
+  function addMatches(label, pattern) {
+    const matches = [...message.matchAll(pattern)];
 
-  if (date) {
-    foundDetails.push("Date: " + date[0]);
+    matches.forEach(function (match) {
+      const detail = label + ": " + match[0];
+
+      if (!foundDetails.includes(detail)) {
+        foundDetails.push(detail);
+      }
+    });
   }
 
-  if (time) {
-    foundDetails.push("Time: " + time[0]);
-  }
-
-  if (money) {
-    foundDetails.push("Amount: " + money[0]);
-  }
-
-  if (arrival) {
-    foundDetails.push("Instruction: " + arrival[0]);
-  }
+  addMatches("Date", patterns.writtenDate);
+  addMatches("Date", patterns.numericDate);
+  addMatches("Day mentioned", patterns.weekday);
+  addMatches("Time", patterns.time);
+  addMatches("Amount", patterns.money);
+  addMatches("Instruction", patterns.arrival);
+  addMatches("Possible deadline", patterns.deadline);
 
   return foundDetails;
 }
