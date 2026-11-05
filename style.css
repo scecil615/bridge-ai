@@ -119,3 +119,26 @@ footer {
 .result p {
   margin-bottom: 0;
 }
+
+.result h4 {
+  font-size: 20px;
+  color: #1769aa;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+
+.result h4:first-of-type {
+  margin-top: 12px;
+}
+
+.result p {
+  line-height: 1.7;
+  font-size: 18px;
+}
+
+.demo-notice {
+  color: #425466;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-top: 18px;
+}
